@@ -1,4 +1,4 @@
-package me.kareluo.utils;
+package me.kareluo.utils.value;
 
 import android.support.annotation.Nullable;
 
