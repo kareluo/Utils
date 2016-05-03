@@ -5,4 +5,7 @@ package me.kareluo.utils.storage;
  */
 public class SharedPreferenceUtils {
 
+    private SharedPreferenceUtils() {
+        /* cannot be instantiated */
+    }
 }

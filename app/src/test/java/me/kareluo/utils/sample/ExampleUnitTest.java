@@ -1,4 +1,4 @@
-package me.kareluo.utils;
+package me.kareluo.utils.sample;
 
 import org.junit.Test;
 

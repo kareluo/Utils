@@ -9,6 +9,10 @@ import android.widget.Toast;
  */
 public class ToastUtils {
 
+    private ToastUtils() {
+        /* cannot be instantiated */
+    }
+
     public static void show(Context context, CharSequence text, int duration) {
         Toast.makeText(context, text, duration).show();
     }
@@ -17,11 +21,11 @@ public class ToastUtils {
         Toast.makeText(context, resId, duration).show();
     }
 
-    public void show(Context context, CharSequence text) {
+    public static void show(Context context, CharSequence text) {
         show(context, text, Toast.LENGTH_SHORT);
     }
 
-    public void show(Context context, @StringRes int resId) {
+    public static void show(Context context, @StringRes int resId) {
         show(context, resId, Toast.LENGTH_SHORT);
     }
 }

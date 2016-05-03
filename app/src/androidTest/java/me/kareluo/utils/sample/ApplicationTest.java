@@ -1,4 +1,4 @@
-package me.kareluo.utils;
+package me.kareluo.utils.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

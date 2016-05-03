@@ -12,7 +12,7 @@ public class RandomUtils {
     private static Random RANDOM = new Random();
 
     private RandomUtils() {
-        throw new IllegalAccessError(Utils.INSTANTIATE_ERROR);
+        /* cannot be instantiated */
     }
 
     public static void reset() {

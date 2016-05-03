@@ -1,4 +1,4 @@
-package me.kareluo.utils;
+package me.kareluo.utils.storage;
 
 import android.renderscript.ScriptGroup;
 import android.support.annotation.Nullable;
@@ -22,6 +22,5 @@ public class StreamUtils {
             }
         }
     }
-
 
 }
