@@ -19,7 +19,7 @@ public class PackageUtils {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException ignored) {
 
         }
         return defaultVersionName;
@@ -33,7 +33,7 @@ public class PackageUtils {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException ignored) {
 
         }
         return defaultVersionCode;
@@ -47,18 +47,17 @@ public class PackageUtils {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return Pair.create(info.versionName, info.versionCode);
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException ignored) {
 
         }
         return Pair.create("0", 0);
     }
 
     public static String getApplicationMetadata(Context context, String key) {
-        ApplicationInfo info = null;
         try {
             return String.valueOf(context.getPackageManager().getApplicationInfo(context.getPackageName(),
                     PackageManager.GET_META_DATA).metaData.get(key));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return null;

@@ -1,10 +1,6 @@
 package me.kareluo.utils.value;
 
-import android.media.TimedText;
-
-import java.util.Calendar;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by felix on 16/5/3.
@@ -22,7 +18,7 @@ public class TimeUtils {
 
     /**
      * 获取当天凌晨时间（毫秒）
-     * @return
+     * @return 今天凌晨时间戳
      */
     public static long getTodayMillis() {
         return getTodayMillis(System.currentTimeMillis());
@@ -30,7 +26,7 @@ public class TimeUtils {
 
     /**
      * 获取millis对应的凌晨时间（毫秒），默认时区
-     * @param millis
+     * @param millis 时间戳
      * @return
      */
     public static long getTodayMillis(long millis) {
@@ -39,9 +35,9 @@ public class TimeUtils {
 
     /**
      * 获取指定时区凌晨时间（毫秒）
-     * @param millis
-     * @param timeZone
-     * @return
+     * @param millis 时间戳
+     * @param timeZone 时区
+     * @return 凌晨时间戳
      */
     public static long getTodayMillis(long millis, TimeZone timeZone) {
         return millis - (millis + timeZone.getOffset(millis)) % DAY;

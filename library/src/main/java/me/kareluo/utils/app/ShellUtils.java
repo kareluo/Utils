@@ -1,12 +1,13 @@
 package me.kareluo.utils.app;
 
 /**
- * Created by felix on 16/5/3.
+ * Created by felix on 16/6/14.
  */
-public class AppUtils {
+public class ShellUtils {
 
-    private AppUtils() {
+    private ShellUtils() {
         /* cannot be instantiated */
     }
+
 
 }

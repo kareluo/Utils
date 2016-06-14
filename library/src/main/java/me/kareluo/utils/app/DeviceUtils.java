@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Pair;
+import android.util.Size;
 import android.view.View;
 
 /**
@@ -61,7 +62,7 @@ public class DeviceUtils {
     /**
      * 截屏
      *
-     * @param activity
+     * @param activity      Activity
      * @param withStatusBar 是否包含状态栏
      * @return 返回截屏后的Bitmap对象
      */

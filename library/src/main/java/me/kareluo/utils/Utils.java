@@ -6,4 +6,5 @@ package me.kareluo.utils;
 public class Utils {
 
     public static final String INSTANTIATE_ERROR = "Cannot be instantiated.";
+
 }
