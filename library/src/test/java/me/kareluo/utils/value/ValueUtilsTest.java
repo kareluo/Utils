@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -36,6 +37,15 @@ public class ValueUtilsTest {
         assertFalse(ValueUtils.isEmpty(i));
 
 
+    }
+
+    @Test
+    public void testAsList() {
+        long[] ids = new long[]{12, 23, 343};
+        List<Long> list = ValueUtils.asList(ids);
+        for (int i = 0; i < ids.length; i++) {
+            assertTrue(list.get(i).longValue() == ids[i]);
+        }
     }
 
 }

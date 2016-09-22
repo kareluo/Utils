@@ -16,6 +16,11 @@
             android:onClick="onClick"
             android:text="@string/screenshot" />
 
+        <me.kareluo.utils.view.MaskView
+            android:layout_width="match_parent"
+            android:background="#450000"
+            android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/iv_screenshot"
             android:layout_width="wrap_content"
