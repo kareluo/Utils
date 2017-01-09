@@ -44,6 +44,7 @@ public class FileUtils {
 
     /**
      * 关闭流等Closeable对象
+     *
      * @param closeable 可关闭对象
      */
     public static void safelyClose(Closeable closeable) {
@@ -54,6 +55,16 @@ public class FileUtils {
 
             }
         }
+    }
+
+    /**
+     * 判断文件是否不为null且存在
+     *
+     * @param file 文件
+     * @return true/false
+     */
+    public static boolean exists(File file) {
+        return file != null && file.exists();
     }
 
 }

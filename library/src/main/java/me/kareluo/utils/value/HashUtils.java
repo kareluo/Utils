@@ -1,6 +1,13 @@
 package me.kareluo.utils.value;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import me.kareluo.utils.storage.FileUtils;
 
 /**
  * Created by felix on 16/5/3.
@@ -14,15 +21,14 @@ public class HashUtils {
             'U', 'V', 'W', 'X', 'Y', 'Z'
     };
 
+    public static final int HEX_LENGTH = 16;
+
     private HashUtils() {
         /* cannot be instantiated */
     }
 
     /**
      * MD5值
-     *
-     * @param bytes 字节数组
-     * @return MD5哈希后的字符数组
      */
     public static byte[] md5(byte[] bytes) {
         try {
@@ -35,10 +41,99 @@ public class HashUtils {
     }
 
     /**
+     * 计算文件的MD5值
+     */
+    public static byte[] md5File(File file) {
+        if (FileUtils.exists(file) && file.isFile()) {
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            try {
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                int len;
+                byte[] buffer = new byte[8192];
+                MessageDigest digest = MessageDigest.getInstance("MD5");
+                while ((len = bis.read(buffer)) != -1) {
+                    digest.update(buffer, 0, len);
+                }
+                return digest.digest();
+            } catch (IOException | NoSuchAlgorithmException e) {
+                return new byte[0];
+            } finally {
+                FileUtils.safelyClose(bis);
+                FileUtils.safelyClose(fis);
+            }
+        }
+        return new byte[0];
+    }
+
+    /**
+     * 返回一串数字和字母组成的文件MD5值的字符串
+     */
+    public static String md5FileString(File file) {
+        byte[] bytes = md5File(file);
+        if (bytes.length > 0) {
+            return StringUtils.toString(bytes, Character.MAX_RADIX);
+        }
+        return null;
+    }
+
+    /**
+     * 计算文件的MD5值的HEX串
+     */
+    public static String md5FileHexString(File file) {
+        byte[] bytes = md5File(file);
+        if (bytes.length > 0) {
+            return hex(bytes);
+        }
+        return null;
+    }
+
+    /**
+     * MD5的16进制字符串
+     */
+    public static String md5HexString(byte[] bytes) {
+        byte[] md5s = md5(bytes);
+        if (md5s.length > 0) {
+            return hex(md5s);
+        }
+        return null;
+    }
+
+    /**
+     * 将HEX字符串转为字节数组
+     */
+    public static byte[] antiHex(String text) {
+        if ((text.length() & 1) != 0) {
+            throw new IllegalArgumentException(
+                    "argument is not a hex string, length=" + text.length());
+        }
+        String s = text.toUpperCase();
+        char[] chars = s.toCharArray();
+        byte[] bytes = new byte[chars.length >> 1];
+        for (int i = 0; i < chars.length; i += 2) {
+            bytes[i >> 1] = antiHex(new char[]{chars[i], chars[i | 1]});
+        }
+        return bytes;
+    }
+
+    public static byte antiHex(char[] chars) {
+        if (chars.length < 2) {
+            throw new IllegalArgumentException("array's length must big than 1.");
+        }
+        byte value = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < HEX_LENGTH; j++) {
+                if (UPPER_CASE_DIGITS[j] == chars[i]) {
+                    value = (byte) ((value << 4) | j);
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
      * 转换成HEX字符串
-     *
-     * @param bytes 字符数组
-     * @return HEX字符串
      */
     public static String hex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
@@ -48,12 +143,11 @@ public class HashUtils {
 
     /**
      * 转换成HEX字符
-     *
-     * @param b 字节
-     * @return HEX字符
      */
-    public static String hex(byte b) {
-        return new String(new char[]{UPPER_CASE_DIGITS[(b >> 4) & 0x0f], UPPER_CASE_DIGITS[b & 0x0f]});
+    public static char[] hex(byte b) {
+        return new char[]{
+                UPPER_CASE_DIGITS[(b >> 4) & 0x0f],
+                UPPER_CASE_DIGITS[b & 0x0f]
+        };
     }
-
 }

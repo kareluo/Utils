@@ -21,6 +21,13 @@ public class DeviceUtils {
         /* cannot be instantiated */
     }
 
+    /**
+     * dp 转 px
+     *
+     * @param context 上下文
+     * @param dp      dp值
+     * @return px值
+     */
     public static int dp2px(Context context, float dp) {
         return Math.round(context.getResources().getDisplayMetrics().density * dp);
     }
@@ -77,8 +84,9 @@ public class DeviceUtils {
             statusBarHeight = frame.top;
         }
         Pair<Integer, Integer> deviceSize = getDeviceSize(activity);
-        Bitmap bitmap = Bitmap.createBitmap(
-                view.getDrawingCache(), 0, statusBarHeight, deviceSize.first, deviceSize.second - statusBarHeight);
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache(), 0,
+                statusBarHeight, deviceSize.first, deviceSize.second - statusBarHeight);
+
         view.destroyDrawingCache();
         return bitmap;
     }
