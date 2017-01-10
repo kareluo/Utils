@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import me.kareluo.utils.Logger;
 import me.kareluo.utils.storage.FileUtils;
 
 /**
  * Created by felix on 16/5/3.
  */
 public class HashUtils {
+
+    private static final String TAG = "HashUtils";
 
     private static final char[] UPPER_CASE_DIGITS = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -22,6 +25,8 @@ public class HashUtils {
     };
 
     public static final int HEX_LENGTH = 16;
+
+    public static final int MASK_4BIT = 0x0F;
 
     private HashUtils() {
         /* cannot be instantiated */
@@ -34,8 +39,8 @@ public class HashUtils {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             return messageDigest.digest(bytes);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            Logger.w(TAG, e);
         }
         return new byte[0];
     }
@@ -146,8 +151,8 @@ public class HashUtils {
      */
     public static char[] hex(byte b) {
         return new char[]{
-                UPPER_CASE_DIGITS[(b >> 4) & 0x0f],
-                UPPER_CASE_DIGITS[b & 0x0f]
+                UPPER_CASE_DIGITS[(b >>> 4) & MASK_4BIT],
+                UPPER_CASE_DIGITS[b & MASK_4BIT]
         };
     }
 }

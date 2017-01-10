@@ -3,11 +3,16 @@ package me.kareluo.utils.storage;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import me.kareluo.utils.Logger;
 
 /**
  * Created by felix on 16/4/29.
  */
 public class FileUtils {
+
+    private static final String TAG = "FileUtils";
 
     private FileUtils() {
         /* cannot be instantiated */
@@ -34,10 +39,23 @@ public class FileUtils {
     public static boolean createIfNotExists(File file) throws IOException {
         if (!file.exists()) {
             File parentFile = file.getParentFile();
+            boolean mkdirs = false;
             if (!parentFile.exists()) {
-                parentFile.mkdirs();
+                mkdirs = parentFile.mkdirs();
             }
-            return file.createNewFile();
+            return mkdirs || file.createNewFile();
+        }
+        return false;
+    }
+
+    public static boolean createDirIfNotExists(File dir) {
+        if (!dir.exists() || !dir.isDirectory()) {
+            File parentFile = dir.getParentFile();
+            boolean mkdirs = false;
+            if (!parentFile.exists()) {
+                mkdirs = parentFile.mkdirs();
+            }
+            return mkdirs || dir.mkdir();
         }
         return false;
     }
@@ -51,8 +69,8 @@ public class FileUtils {
         if (closeable != null) {
             try {
                 closeable.close();
-            } catch (IOException ignored) {
-
+            } catch (IOException e) {
+                Logger.w(TAG, e);
             }
         }
     }
